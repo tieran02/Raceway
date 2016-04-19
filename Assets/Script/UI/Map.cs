@@ -30,7 +30,7 @@ public class Map : MonoBehaviour {
         for (int i = 0; i < amountOfRacers; i++)
         {
             Image marker = markers[i];
-            marker.rectTransform.anchoredPosition = GameManager.instance.Racers[i].Car.Position * 5;
+            marker.rectTransform.anchoredPosition = GameManager.instance.Racers[i].Car.Position * 1f;
         }
 	}
 
