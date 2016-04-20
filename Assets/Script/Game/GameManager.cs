@@ -63,4 +63,23 @@ public class GameManager : MonoBehaviour {
         }
         return null;
     }
+
+    public void setupGame()
+    {
+        GameObject[] spawners;
+        spawners = GameObject.FindGameObjectsWithTag("Spawners");
+
+        for (int i = 0; i < spawners.Length-1; i++)
+        {
+            if(i == 0)
+            {
+                //setup plater
+            }
+            else
+            {
+                //setup AI
+                spawners[i].AddComponent<VehicleSpawner>();
+            }
+        }
+    }
 }

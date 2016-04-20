@@ -20,6 +20,14 @@ public class Vehicle : MonoBehaviour
     [SerializeField]
     private bool handbrake = false;
 
+    public VehicleType vehicleType;
+
+    public enum VehicleType
+    {
+        Car,
+        Boat
+    }
+
     private Vector2 position;
     private double speed;
     private float driftFactor;

@@ -13,7 +13,7 @@ public class speedSound : MonoBehaviour {
         vehicle = GetComponent<Vehicle>();
         gameObject.AddComponent<AudioSource>();
         audioSource = GetComponent<AudioSource>();
-        audioSource.volume = 0.10f;
+        audioSource.volume = 0.01f;
     }
 	
 	// Update is called once per frame
