@@ -1,14 +1,11 @@
 ﻿<Properties StartupItem="Assembly-CSharp.csproj">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="Unity.Instance.Unity Editor" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Script\Car\Vehcle.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Script\Car\CarAI.cs">
     <Files>
-      <File FileName="Assets\Script\Car\Vehcle.cs" Line="36" Column="2" />
+      <File FileName="Assets\Script\Waypoints\WaypointManager.cs" Line="1" Column="1" />
       <File FileName="Assets\Script\Yacht\BoatAI.cs" Line="1" Column="1" />
-      <File FileName="Assets\Script\Car\CarController.cs" Line="1" Column="1" />
-      <File FileName="Assets\Script\Game\Racer.cs" Line="1" Column="1" />
-      <File FileName="Assets\Script\UI\Lap.cs" Line="1" Column="1" />
-      <File FileName="Assets\Script\Game\GameManager.cs" Line="1" Column="1" />
-      <File FileName="Assets\Script\Game\FinishLine.cs" Line="1" Column="1" />
+      <File FileName="Assets\Script\Car\CarAI.cs" Line="81" Column="61" />
+      <File FileName="Assets\Script\Sound\speedSound.cs" Line="1" Column="1" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

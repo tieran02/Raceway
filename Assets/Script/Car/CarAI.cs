@@ -7,7 +7,7 @@ public class CarAI : MonoBehaviour {
     int currentWaypoint = 0;
 
 
-    public float frontSensorLength = .5f;
+    public float frontSensorLength = 1f;
     public float frontSensorOffset;
 
     float Width = 0.8f;
@@ -73,12 +73,17 @@ public class CarAI : MonoBehaviour {
         RaycastHit2D FrontRightAngle = Physics2D.Raycast(pos + transform.right * Width / 2, direction, frontSensorLength );
 
         //Side Raycasters
-        RaycastHit2D Right = Physics2D.Raycast(pos + transform.right * Width / 2 - transform.up * Height / 2, transform.right * .25f);
-        RaycastHit2D Left = Physics2D.Raycast(pos - transform.right * Width / 2 - transform.up * Height / 2, -transform.right * .25f);
+        RaycastHit2D Right = Physics2D.Raycast(pos + transform.right * Width / 2 - transform.up * Height / 2, transform.right, .25f);
+        RaycastHit2D Left = Physics2D.Raycast(pos - transform.right * Width / 2 - transform.up * Height / 2, -transform.right, .25f);
 
         if (FrontMiddle)
         {
-            brake = true;
+			if(FrontMiddle.collider.tag == "collider" && FrontMiddle.distance <= frontSensorLength/2)
+            	brake = true;
+
+            if (FrontMiddle.collider.tag == "Racer")
+                if(racer.Car.Speed  >= FrontMiddle.collider.GetComponent<Racer>().Car.Speed)
+                    brake = true;
         }
         else
             brake = false;

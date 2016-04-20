@@ -19,7 +19,7 @@ public class speedSound : MonoBehaviour {
 	// Update is called once per frame
 	void Update ()
     {
-	    if(Sources != null)
+	    if(Sources != null && Sources.Length >= 2)
         {
             if (vehicle.Speed > 0 && vehicle.Speed < 10)
             {
@@ -29,11 +29,13 @@ public class speedSound : MonoBehaviour {
             {
                 audioSource.clip = Sources[1];
             }
+		}
+		else if (vehicle.Speed > 0)
+			audioSource.clip = Sources[0];
+		if (!audioSource.isPlaying)
+		{
+			audioSource.Play();
+		}
 
-            if (!audioSource.isPlaying)
-            {
-                audioSource.Play();
-            }
-        }
 	}
 }

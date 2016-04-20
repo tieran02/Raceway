@@ -49,10 +49,11 @@
      <Compile Include="Assets\Script\Car\CarAI.cs" />
      <Compile Include="Assets\Script\Car\CarController.cs" />
      <Compile Include="Assets\Script\Car\Skid.cs" />
-     <Compile Include="Assets\Script\Car\Vehcle.cs" />
+     <Compile Include="Assets\Script\Car\Vehicle.cs" />
      <Compile Include="Assets\Script\Game\FinishLine.cs" />
      <Compile Include="Assets\Script\Game\GameManager.cs" />
      <Compile Include="Assets\Script\Game\Racer.cs" />
+     <Compile Include="Assets\Script\Sound\speedSound.cs" />
      <Compile Include="Assets\Script\UI\Lap.cs" />
      <Compile Include="Assets\Script\UI\Map.cs" />
      <Compile Include="Assets\Script\UI\Speedometer.cs" />

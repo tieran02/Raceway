@@ -10,21 +10,23 @@ public class BoatAI : MonoBehaviour {
     public float frontSensorLength = .5f;
     public float frontSensorOffset;
 
-    float Width = 0.4f;
+    float Width = 0.5f;
+	float Height = 0.5f;
     public bool brake = false;
     public int flag = 0;
     // Use this for initialization
     void Start () {
         racer = GetComponent<Racer>();
         //Width = GetComponent<Renderer>().bounds.size.x;
+		Height = GetComponent<Renderer>().bounds.size.y;
         path = WaypointManager.instance.waypoints;
 	}
 
     // Update is called once per frame
     void FixedUpdate()
     {
-        frontSensorLength = Mathf.Clamp(racer.Car.Velocity.magnitude, 2f,12) * .5f;
-            racer.Car.FaceTowards(path[currentWaypoint].AIPathCenter());
+       
+        racer.Car.FaceTowards(path[currentWaypoint].AIPathCenter());
         MoveToWaypoint();
 
         RayCasting();
@@ -54,58 +56,93 @@ public class BoatAI : MonoBehaviour {
             currentWaypoint = path[currentWaypoint].Node.index++;
     }
 
-    void RayCasting()
-    {
-        flag = 0;
-        float avoidSenstivity = 0f;
-        Vector3 pos = transform.position + (transform.up * frontSensorOffset);
-        RaycastHit2D FrontMiddle = Physics2D.Raycast(pos, transform.up, frontSensorLength);
-        RaycastHit2D FrontRight = Physics2D.Raycast(pos + transform.right * Width / 2, transform.up, frontSensorLength);
-        RaycastHit2D FrontLeft = Physics2D.Raycast(pos - transform.right * Width / 2, transform.up, frontSensorLength);
+	void RayCasting()
+	{
+		flag = 0;
+		float avoidSenstivity = 0f;
+		//Front Raycasters
+		Vector3 pos = transform.position + (transform.up * Height);
+		RaycastHit2D FrontMiddle = Physics2D.Raycast(pos, transform.up, frontSensorLength);
+		RaycastHit2D FrontRight = Physics2D.Raycast(pos + transform.right * Width / 2, transform.up, frontSensorLength);
+		RaycastHit2D FrontLeft = Physics2D.Raycast(pos - transform.right * Width / 2, transform.up, frontSensorLength);
 
-        Vector3 direction = Quaternion.AngleAxis(30.0f, transform.forward) * transform.up;
-        RaycastHit2D FrontLeftAngle = Physics2D.Raycast(pos - transform.right * Width / 2, direction, frontSensorLength);
-        direction = Quaternion.AngleAxis(-30.0f, transform.forward) * transform.up;
-        RaycastHit2D FrontRightAngle = Physics2D.Raycast(pos + transform.right * Width / 2, direction, frontSensorLength );
+		//Angle Raycasters
+		Vector3 direction = Quaternion.AngleAxis(30.0f, transform.forward) * transform.up;
+		RaycastHit2D FrontLeftAngle = Physics2D.Raycast(pos - transform.right * Width / 2, direction, frontSensorLength);
+		direction = Quaternion.AngleAxis(-30.0f, transform.forward) * transform.up;
+		RaycastHit2D FrontRightAngle = Physics2D.Raycast(pos + transform.right * Width / 2, direction, frontSensorLength );
 
-        if (FrontMiddle)
-        {
-            if(FrontMiddle.collider.tag == "collider")
-                brake = true;
-        }
-        else
-            brake = false;
+		//Side Raycasters
+		RaycastHit2D Right = Physics2D.Raycast(pos + transform.right * Width / 2 - transform.up * Height / 2, transform.right, .25f);
+		RaycastHit2D Left = Physics2D.Raycast(pos - transform.right * Width / 2 - transform.up * Height / 2, -transform.right, .25f);
 
-
-        if (FrontRight)
-        {
-                flag++;
-                avoidSenstivity -= .2f;
-        }
+		if (FrontMiddle)
+		{
+			brake = true;
+		}
+		else
+			brake = false;
 
 
-        if (FrontLeft)
-        {
-                flag++;
-                avoidSenstivity += .2f;
-        }
+		if (FrontRight)
+		{
+			if (FrontRight.collider.tag != "collider")
+			{
+				flag++;
+				avoidSenstivity -= .2f;
+			}
+		}
 
-        if (FrontLeftAngle)
-        {
 
-                flag++;
-                avoidSenstivity += .2f;
-        }
+		if (FrontLeft)
+		{
+			if (FrontLeft.collider.tag != "collider")
+			{
+				flag++;
+				avoidSenstivity += .2f;
+			}
+		}
 
-        if (FrontRightAngle)
-        {
-                flag++;
-                avoidSenstivity -= .2f;
-        }
+		if (FrontLeftAngle)
+		{
+			if (FrontLeftAngle.collider.tag != "collider")
+			{
+				flag++;
+				avoidSenstivity += .2f;
+			}
+		}
 
-        if (flag != 0)
-            AvoidSteer(avoidSenstivity);
-    }
+		if (FrontRightAngle)
+		{
+			if (FrontRightAngle.collider.tag != "collider")
+			{
+				flag++;
+				avoidSenstivity -= .2f;
+			}
+		}
+
+		if (Left)
+		{
+			if (Left.collider.tag != "collider")
+			{
+				flag++;
+				avoidSenstivity += .2f;
+			}
+		}
+
+		if (Right)
+		{
+			if (Right.collider.tag != "collider")
+			{
+				flag++;
+				avoidSenstivity -= .2f;
+			}
+		}
+
+		if (flag != 0)
+			AvoidSteer(avoidSenstivity);
+	}
+
 
     void AvoidSteer(float amount)
     {
@@ -114,15 +151,19 @@ public class BoatAI : MonoBehaviour {
 
     void OnDrawGizmos()
     {
-        Gizmos.color = Color.red;
-        Vector3 pos = transform.position + (transform.up * frontSensorOffset);
-        Debug.DrawRay(pos, transform.up * frontSensorLength);
-        Debug.DrawRay(pos + transform.right * Width / 2, transform.up * frontSensorLength);
-        Debug.DrawRay(pos - transform.right * Width / 2, transform.up * frontSensorLength);
-        Vector3 direction = Quaternion.AngleAxis(30.0f, transform.forward) * transform.up;
-        Debug.DrawRay(pos - transform.right * Width / 2, direction * frontSensorLength);
-        direction = Quaternion.AngleAxis(-30.0f, transform.forward) * transform.up;
-        Debug.DrawRay(pos + transform.right * Width / 2, direction * frontSensorLength);
+		Gizmos.color = Color.red;
+		Vector3 pos = transform.position + (transform.up * Height / 2);
+		Debug.DrawRay(pos, transform.up * frontSensorLength);
+		Debug.DrawRay(pos + transform.right * Width / 2, transform.up * frontSensorLength);
+		Debug.DrawRay(pos - transform.right * Width / 2, transform.up * frontSensorLength);
+
+		Vector3 direction = Quaternion.AngleAxis(30.0f, transform.forward) * transform.up;
+		Debug.DrawRay(pos - transform.right * Width / 2, direction * frontSensorLength);
+		direction = Quaternion.AngleAxis(-30.0f, transform.forward) * transform.up;
+		Debug.DrawRay(pos + transform.right * Width / 2, direction * frontSensorLength);
+
+		Debug.DrawRay(pos + transform.right * Width / 2 - transform.up * Height / 2, transform.right * .25f);
+		Debug.DrawRay(pos - transform.right * Width / 2 - transform.up * Height / 2, -transform.right * .25f);
     }
 
 }
