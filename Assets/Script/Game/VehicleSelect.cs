@@ -47,4 +47,12 @@ public class VehicleSelect : MonoBehaviour {
             index--;
         currentVehicle = vehcles[index];
     }
+
+    public void SelectCar()
+    {
+        Debug.Log(currentVehicle.name);
+        PlayerPrefs.SetString("PlayerVehicle", currentVehicle.name);
+        GameManager.instance.setupGame();
+        gameObject.SetActive(false);
+    }
 }

@@ -30,9 +30,6 @@ public class GameManager : MonoBehaviour {
             //Then destroy this. This enforces our singleton pattern, meaning there can only ever be one instance of a GameManager.
             Destroy(gameObject);
 
-        //Sets this to not be destroyed when reloading scene
-        DontDestroyOnLoad(gameObject);
-
         //Call the InitGame function to initialize the first level 
         InitGame();
     }
@@ -69,16 +66,21 @@ public class GameManager : MonoBehaviour {
         GameObject[] spawners;
         spawners = GameObject.FindGameObjectsWithTag("Spawners");
 
-        for (int i = 0; i < spawners.Length-1; i++)
+        for (int i = 0; i < spawners.Length; i++)
         {
             if(i == 0)
             {
-                //setup plater
+                //setup player
+                spawners[i].AddComponent<VehicleSpawner>();
+                VehicleSpawner vehicleSpawner = spawners[i].GetComponent<VehicleSpawner>();
+                vehicleSpawner.player = true;
             }
             else
             {
                 //setup AI
                 spawners[i].AddComponent<VehicleSpawner>();
+                VehicleSpawner vehicleSpawner = spawners[i].GetComponent<VehicleSpawner>();
+                vehicleSpawner.player = false;
             }
         }
     }
