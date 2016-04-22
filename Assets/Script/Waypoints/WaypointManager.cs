@@ -23,11 +23,7 @@ public class WaypointManager : MonoBehaviour
 
         //Sets this to not be destroyed when reloading scene
         DontDestroyOnLoad(gameObject);
-    }
 
-    // Use this for initialization
-    void Start()
-    {
         if (waypoints == null)
             AddWaypoints();
     }

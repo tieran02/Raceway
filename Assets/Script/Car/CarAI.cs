@@ -3,7 +3,7 @@ using System.Collections;
 
 public class CarAI : MonoBehaviour {
     Racer racer;
-    Waypoint[] path;
+    public Waypoint[] path;
     int currentWaypoint = 0;
 
 
@@ -14,11 +14,12 @@ public class CarAI : MonoBehaviour {
     float Height = 0.5f;
     public bool brake = false;
     public int flag = 0;
+
     // Use this for initialization
-    void Start () {
+    void Awake () {
         racer = GetComponent<Racer>();
-        //Width = GetComponent<Renderer>().bounds.size.x;
-        Height = GetComponent<Renderer>().bounds.size.y;
+        Width = transform.GetChild(0).GetComponent<SpriteRenderer>().bounds.size.z;
+        Height = transform.GetChild(0).GetComponent<SpriteRenderer>().bounds.size.y;
         path = WaypointManager.instance.waypoints;
         Debug.Log(Height);
 	}
