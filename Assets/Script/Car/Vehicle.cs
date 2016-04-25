@@ -19,6 +19,7 @@ public class Vehicle : MonoBehaviour
     private float minSlippyVelocity = 1.5f;
     [SerializeField]
     private bool handbrake = false;
+    private VehicleColor vechicleColor;
 
     public VehicleType vehicleType;
 
@@ -41,7 +42,7 @@ public class Vehicle : MonoBehaviour
     {
         rb = GetComponent<Rigidbody2D>();
         DriftFactor = DriftFactorSticky;
-	
+        VechicleColor = GetComponent<VehicleColor>();
     }
 
     void FixedUpdate()
@@ -260,6 +261,19 @@ public class Vehicle : MonoBehaviour
         get
         {
             return rb.velocity.magnitude * 2.237 * 2;
+        }
+    }
+
+    public VehicleColor VechicleColor
+    {
+        get
+        {
+            return vechicleColor;
+        }
+
+        set
+        {
+            vechicleColor = value;
         }
     }
 }

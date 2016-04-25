@@ -7,7 +7,7 @@ public class CarAI : MonoBehaviour {
     int currentWaypoint = 0;
 
 
-    public float frontSensorLength = 1f;
+    public float frontSensorLength = .5f;
     public float frontSensorOffset;
 
     float Width = 0.8f;
@@ -18,7 +18,7 @@ public class CarAI : MonoBehaviour {
     // Use this for initialization
     void Awake () {
         racer = GetComponent<Racer>();
-        Width = transform.GetChild(0).GetComponent<SpriteRenderer>().bounds.size.z;
+        Width = transform.GetChild(0).GetComponent<SpriteRenderer>().bounds.size.x/2;
         Height = transform.GetChild(0).GetComponent<SpriteRenderer>().bounds.size.y;
         path = WaypointManager.instance.waypoints;
         Debug.Log(Height);
@@ -63,14 +63,14 @@ public class CarAI : MonoBehaviour {
         float avoidSenstivity = 0f;
         //Front Raycasters
         Vector3 pos = transform.position + (transform.up * Height);
-        RaycastHit2D FrontMiddle = Physics2D.Raycast(pos, transform.up, frontSensorLength);
+        RaycastHit2D FrontMiddle = Physics2D.Raycast(pos, transform.up, frontSensorLength * 2);
         RaycastHit2D FrontRight = Physics2D.Raycast(pos + transform.right * Width / 2, transform.up, frontSensorLength);
         RaycastHit2D FrontLeft = Physics2D.Raycast(pos - transform.right * Width / 2, transform.up, frontSensorLength);
 
         //Angle Raycasters
-        Vector3 direction = Quaternion.AngleAxis(30.0f, transform.forward) * transform.up;
+        Vector3 direction = Quaternion.AngleAxis(20.0f, transform.forward) * transform.up;
         RaycastHit2D FrontLeftAngle = Physics2D.Raycast(pos - transform.right * Width / 2, direction, frontSensorLength);
-        direction = Quaternion.AngleAxis(-30.0f, transform.forward) * transform.up;
+        direction = Quaternion.AngleAxis(-20.0f, transform.forward) * transform.up;
         RaycastHit2D FrontRightAngle = Physics2D.Raycast(pos + transform.right * Width / 2, direction, frontSensorLength );
 
         //Side Raycasters
@@ -79,11 +79,14 @@ public class CarAI : MonoBehaviour {
 
         if (FrontMiddle)
         {
-			if(FrontMiddle.collider.tag == "collider" && FrontMiddle.distance <= frontSensorLength/2)
+			if(FrontMiddle.collider.tag == "collider" && racer.Car.Speed < 5)
             	brake = true;
 
-            if (FrontMiddle.collider.tag == "Racer")
-                if(racer.Car.Speed  >= FrontMiddle.collider.GetComponent<Racer>().Car.Speed)
+            if (FrontMiddle.collider.tag == "collider" && racer.Car.Speed > 10)
+                brake = true;
+
+            else if (FrontMiddle.collider.tag == "Racer")
+                if(racer.Car.Speed  >= FrontMiddle.collider.GetComponent<Racer>().Car.Speed && FrontMiddle.distance < 0.5f)
                     brake = true;
         }
         else
@@ -92,6 +95,10 @@ public class CarAI : MonoBehaviour {
 
         if (FrontRight)
         {
+
+            if (FrontRight.collider.tag == "collider" && racer.Car.Speed > 10)
+                brake = true;
+
             if (FrontRight.collider.tag != "collider")
             {
                 flag++;
@@ -102,6 +109,9 @@ public class CarAI : MonoBehaviour {
 
         if (FrontLeft)
         {
+            if (FrontLeft.collider.tag == "collider" && racer.Car.Speed > 10)
+                brake = true;
+
             if (FrontLeft.collider.tag != "collider")
             {
                 flag++;
@@ -116,6 +126,12 @@ public class CarAI : MonoBehaviour {
                 flag++;
                 avoidSenstivity += .2f;
             }
+
+            if (FrontLeftAngle.collider.tag == "collider" && FrontLeftAngle.distance <= frontSensorLength / 2)
+            {
+                flag++;
+                avoidSenstivity += .2f;
+            }
         }
 
         if (FrontRightAngle)
@@ -125,24 +141,24 @@ public class CarAI : MonoBehaviour {
                 flag++;
                 avoidSenstivity -= .2f;
             }
-        }
 
-        if (Left)
-        {
-            if (Left.collider.tag != "collider")
+            if (FrontRightAngle.collider.tag == "collider" && FrontRightAngle.distance <= frontSensorLength / 2)
             {
                 flag++;
                 avoidSenstivity += .2f;
             }
         }
 
+        if (Left)
+        {
+                flag++;
+                avoidSenstivity += .2f;
+        }
+
         if (Right)
         {
-            if (Right.collider.tag != "collider")
-            {
                 flag++;
                 avoidSenstivity -= .2f;
-            }
         }
 
         if (flag != 0)
@@ -158,13 +174,13 @@ public class CarAI : MonoBehaviour {
     {
         Gizmos.color = Color.red;
         Vector3 pos = transform.position + (transform.up * Height / 2);
-        Debug.DrawRay(pos, transform.up * frontSensorLength);
+        Debug.DrawRay(pos, transform.up * frontSensorLength * 2);
         Debug.DrawRay(pos + transform.right * Width / 2, transform.up * frontSensorLength);
         Debug.DrawRay(pos - transform.right * Width / 2, transform.up * frontSensorLength);
 
-        Vector3 direction = Quaternion.AngleAxis(30.0f, transform.forward) * transform.up;
+        Vector3 direction = Quaternion.AngleAxis(20.0f, transform.forward) * transform.up;
         Debug.DrawRay(pos - transform.right * Width / 2, direction * frontSensorLength);
-        direction = Quaternion.AngleAxis(-30.0f, transform.forward) * transform.up;
+        direction = Quaternion.AngleAxis(-20.0f, transform.forward) * transform.up;
         Debug.DrawRay(pos + transform.right * Width / 2, direction * frontSensorLength);
 
         Debug.DrawRay(pos + transform.right * Width / 2 - transform.up * Height / 2, transform.right * .25f);

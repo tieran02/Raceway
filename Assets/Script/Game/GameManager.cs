@@ -15,6 +15,19 @@ public class GameManager : MonoBehaviour {
         Boat
     }
 
+    public List<Color> colorList = new List<Color>()
+    {
+         Color.red,
+         Color.green,
+         Color.blue,
+         Color.yellow,
+         Color.magenta,
+         Color.cyan,
+         Color.black,
+         Color.gray,
+         Color.white
+    };
+
     //Awake is always called before any Start functions
     void Awake()
     {

@@ -26,28 +26,29 @@ public class VehicleSpawner : MonoBehaviour {
 
     public void spawnVehicle()
     {
+        GameObject vehicle;
         if (player)
         {
             string vehicleName = PlayerPrefs.GetString("PlayerVehicle");
-            Debug.Log(path + "\\" + vehicleName);
-            GameObject vehicle = Instantiate(Resources.Load<GameObject>(path + "\\" + vehicleName));
-            vehicle.transform.position = transform.position;
-            vehicle.transform.rotation = transform.rotation;
+            vehicle = Instantiate(Resources.Load<GameObject>(path + "\\" + vehicleName));
             vehicle.GetComponent<Racer>().IsPlayer = true;
-            vehicle.transform.parent = gameObject.transform.parent;
+            VehicleColor vehicleColor = vehicle.GetComponent<VehicleColor>();
+            vehicleColor.BodyColors = PlayerPrefsX.GetColorArray("rgb");
             GameObject.FindGameObjectWithTag("MainCamera").GetComponent<CameraFollow>().target = vehicle.transform;
-            Destroy(gameObject);
         }
         else
         {
             int random = Random.Range(0, vehcles.Length);
-            GameObject vehicle = Instantiate(vehcles[random]);
-            vehicle.transform.position = transform.position;
-            vehicle.transform.rotation = transform.rotation;
+            vehicle = Instantiate(vehcles[random]);
+            for (int i = 0; i < vehicle.GetComponent<VehicleColor>().BodyColors.Length; i++)
+            {
+                vehicle.GetComponent<VehicleColor>().BodyColors[i] = new Color(Random.Range(0f, 1f), Random.Range(0f, 1f), Random.Range(0f, 1f));
+            }
             vehicle.GetComponent<Racer>().IsPlayer = false;
-            vehicle.transform.parent = gameObject.transform.parent;
-            Destroy(gameObject);
         }
-
+        vehicle.transform.position = transform.position;
+        vehicle.transform.rotation = transform.rotation;
+        vehicle.transform.parent = gameObject.transform.parent;
+        Destroy(gameObject);
     }
 }
