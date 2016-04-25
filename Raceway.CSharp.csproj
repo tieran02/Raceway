@@ -70,7 +70,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\CameraFollow.cs" />
-    <Compile Include="Assets\PlayMaker Custom Actions\PlayerPrefsx\PlayerPrefsX.cs" />
     <Compile Include="Assets\Script\Camera\SmoothCam.cs" />
     <Compile Include="Assets\Script\Car\CarAI.cs" />
     <Compile Include="Assets\Script\Car\CarController.cs" />
@@ -91,6 +90,7 @@
     <Compile Include="Assets\Script\UI\Menus\ProfileMenu.cs" />
     <Compile Include="Assets\Script\UI\Menus\SinglePlayerMenu.cs" />
     <Compile Include="Assets\Script\UI\Speedometer.cs" />
+    <Compile Include="Assets\Script\Utilities\PlayerPrefsx\PlayerPrefsX.cs" />
     <Compile Include="Assets\Script\Waypoints\Node.cs" />
     <Compile Include="Assets\Script\Waypoints\Waypoint.cs" />
     <Compile Include="Assets\Script\Waypoints\WaypointManager.cs" />
