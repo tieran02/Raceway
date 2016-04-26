@@ -1,7 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2015
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Raceway.CSharp.Plugins", "Raceway.CSharp.Plugins.csproj", "{C9EA010A-16C0-9F43-E9ED-A19A671FB610}"
+EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Raceway.CSharp", "Raceway.CSharp.csproj", "{BA45902D-32B6-9F1C-F911-5C65052EC748}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Raceway.CSharp.Editor", "Raceway.CSharp.Editor.csproj", "{A7F41AF2-C362-01C3-12F2-070723706E00}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -9,10 +13,18 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{C9EA010A-16C0-9F43-E9ED-A19A671FB610}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C9EA010A-16C0-9F43-E9ED-A19A671FB610}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C9EA010A-16C0-9F43-E9ED-A19A671FB610}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C9EA010A-16C0-9F43-E9ED-A19A671FB610}.Release|Any CPU.Build.0 = Release|Any CPU
 		{BA45902D-32B6-9F1C-F911-5C65052EC748}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{BA45902D-32B6-9F1C-F911-5C65052EC748}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BA45902D-32B6-9F1C-F911-5C65052EC748}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BA45902D-32B6-9F1C-F911-5C65052EC748}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A7F41AF2-C362-01C3-12F2-070723706E00}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A7F41AF2-C362-01C3-12F2-070723706E00}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A7F41AF2-C362-01C3-12F2-070723706E00}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A7F41AF2-C362-01C3-12F2-070723706E00}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

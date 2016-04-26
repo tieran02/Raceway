@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityStandardAssets.CrossPlatformInput;
 
 public class CarController : MonoBehaviour
 {
@@ -13,12 +14,12 @@ public class CarController : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetButton("accelerate"))
+        if (CrossPlatformInputManager.GetAxis("Vertical") > 0)
         {
             car.AddForce(transform.up * car.SpeedForce);
 
         }
-        if (Input.GetButton("brake"))
+        if (CrossPlatformInputManager.GetAxis("Vertical") < 0)
         {
             car.AddForce(transform.up * -car.SpeedForce / 2f);
         }
@@ -29,6 +30,6 @@ public class CarController : MonoBehaviour
         }else
             car.Handbrake = false;
 
-        car.AngularVelocity(Input.GetAxis("Horizontal"));
+        car.AngularVelocity(CrossPlatformInputManager.GetAxis("Horizontal"));
     }
 }

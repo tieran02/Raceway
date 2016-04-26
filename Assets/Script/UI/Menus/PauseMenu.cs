@@ -10,7 +10,7 @@ public class PauseMenu : MonoBehaviour {
     {
         if (Input.GetKeyDown (KeyCode.Escape))
         {
-            pauseMenu.SetActive(!pauseMenu.activeInHierarchy);
+            ShowMenu();
         }
     }
 
@@ -22,5 +22,10 @@ public class PauseMenu : MonoBehaviour {
     public void Quit()
     {
         SceneManager.LoadScene("Menu");
+    }
+
+    public void ShowMenu()
+    {
+        pauseMenu.SetActive(!pauseMenu.activeInHierarchy);
     }
 }

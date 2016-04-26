@@ -24,7 +24,6 @@ public class WaypointManager : MonoBehaviour
         //Sets this to not be destroyed when reloading scene
         DontDestroyOnLoad(gameObject);
 
-        if (waypoints == null)
             AddWaypoints();
     }
 
@@ -41,6 +40,7 @@ public class WaypointManager : MonoBehaviour
         {
             foreach (Component comp in child.GetComponents<Component>())
             {
+                if (comp.GetType() != typeof(Transform)) 
                     DestroyImmediate(comp);
             }
         }

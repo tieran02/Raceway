@@ -13,9 +13,13 @@ public class VehicleSelect : MonoBehaviour {
     private int carIndex = 0;
     public Color[] vehicleColors;
 
+    private HUD hud;
+
     // Use this for initialization
     void Start ()
     {
+        hud = transform.parent.gameObject.GetComponent<HUD>();
+        hud.setHUD(false);
         if (GameManager.instance.raceType == GameManager.RaceType.Car)
             vehcles = Resources.LoadAll<GameObject>("Prefabs\\Vehicles\\Cars");
         else if (GameManager.instance.raceType == GameManager.RaceType.Boat)
@@ -51,12 +55,12 @@ public class VehicleSelect : MonoBehaviour {
 
     public void SelectCar()
     {
-        Debug.Log(currentVehicle.name);
         PlayerPrefs.SetString("PlayerVehicle", vehcles[carIndex].name);
         PlayerPrefsX.SetColorArray("rgb", currentVehicle.GetComponent<VehicleColor>().BodyColors);
         Destroy(currentVehicle);
         GameManager.instance.setupGame();
         gameObject.SetActive(false);
+        hud.setHUD(true);
     }
 
     //public void getVehicle()
@@ -163,6 +167,5 @@ public class VehicleSelect : MonoBehaviour {
         vehicleCustomise.transform.GetChild(1).GetComponent<Slider>().value = vehicleColor.BodyColors[dropdown.value].r;
         vehicleCustomise.transform.GetChild(2).GetComponent<Slider>().value = vehicleColor.BodyColors[dropdown.value].g;
         vehicleCustomise.transform.GetChild(3).GetComponent<Slider>().value = vehicleColor.BodyColors[dropdown.value].b;
-        Debug.Log(dropdown.value);
     }
 }
