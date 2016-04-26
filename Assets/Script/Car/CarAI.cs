@@ -18,7 +18,7 @@ public class CarAI : MonoBehaviour {
     // Use this for initialization
     void Awake () {
         racer = GetComponent<Racer>();
-        Width = transform.GetChild(0).GetComponent<SpriteRenderer>().bounds.size.x/2;
+        Width = transform.GetChild(0).GetComponent<SpriteRenderer>().bounds.size.x/3;
         Height = transform.GetChild(0).GetComponent<SpriteRenderer>().bounds.size.y;
         path = WaypointManager.instance.waypoints;
         Debug.Log(Height);
@@ -63,9 +63,9 @@ public class CarAI : MonoBehaviour {
         float avoidSenstivity = 0f;
         //Front Raycasters
         Vector3 pos = transform.position + (transform.up * Height);
-        RaycastHit2D FrontMiddle = Physics2D.Raycast(pos, transform.up, frontSensorLength * 2);
-        RaycastHit2D FrontRight = Physics2D.Raycast(pos + transform.right * Width / 2, transform.up, frontSensorLength);
-        RaycastHit2D FrontLeft = Physics2D.Raycast(pos - transform.right * Width / 2, transform.up, frontSensorLength);
+        RaycastHit2D FrontMiddle = Physics2D.Raycast(pos, transform.up, frontSensorLength * 4);
+        RaycastHit2D FrontRight = Physics2D.Raycast(pos + transform.right * Width / 2, transform.up, frontSensorLength * 2);
+        RaycastHit2D FrontLeft = Physics2D.Raycast(pos - transform.right * Width / 2, transform.up, frontSensorLength * 2);
 
         //Angle Raycasters
         Vector3 direction = Quaternion.AngleAxis(20.0f, transform.forward) * transform.up;
@@ -74,8 +74,8 @@ public class CarAI : MonoBehaviour {
         RaycastHit2D FrontRightAngle = Physics2D.Raycast(pos + transform.right * Width / 2, direction, frontSensorLength );
 
         //Side Raycasters
-        RaycastHit2D Right = Physics2D.Raycast(pos + transform.right * Width / 2 - transform.up * Height / 2, transform.right, .25f);
-        RaycastHit2D Left = Physics2D.Raycast(pos - transform.right * Width / 2 - transform.up * Height / 2, -transform.right, .25f);
+        RaycastHit2D Right = Physics2D.Raycast(pos + transform.right * Width / 2 - transform.up * Height / 2, transform.right, .5f);
+        RaycastHit2D Left = Physics2D.Raycast(pos - transform.right * Width / 2 - transform.up * Height / 2, -transform.right, .5f);
 
         if (FrontMiddle)
         {
@@ -174,17 +174,17 @@ public class CarAI : MonoBehaviour {
     {
         Gizmos.color = Color.red;
         Vector3 pos = transform.position + (transform.up * Height / 2);
-        Debug.DrawRay(pos, transform.up * frontSensorLength * 2);
-        Debug.DrawRay(pos + transform.right * Width / 2, transform.up * frontSensorLength);
-        Debug.DrawRay(pos - transform.right * Width / 2, transform.up * frontSensorLength);
+        Debug.DrawRay(pos, transform.up * frontSensorLength * 4);
+        Debug.DrawRay(pos + transform.right * Width / 2, transform.up * frontSensorLength * 2);
+        Debug.DrawRay(pos - transform.right * Width / 2, transform.up * frontSensorLength * 2);
 
         Vector3 direction = Quaternion.AngleAxis(20.0f, transform.forward) * transform.up;
         Debug.DrawRay(pos - transform.right * Width / 2, direction * frontSensorLength);
         direction = Quaternion.AngleAxis(-20.0f, transform.forward) * transform.up;
         Debug.DrawRay(pos + transform.right * Width / 2, direction * frontSensorLength);
 
-        Debug.DrawRay(pos + transform.right * Width / 2 - transform.up * Height / 2, transform.right * .25f);
-        Debug.DrawRay(pos - transform.right * Width / 2 - transform.up * Height / 2, -transform.right * .25f);
+        Debug.DrawRay(pos + transform.right * Width / 2 - transform.up * Height / 2, transform.right * .5f);
+        Debug.DrawRay(pos - transform.right * Width / 2 - transform.up * Height / 2, -transform.right * .5f);
     }
 
 }
