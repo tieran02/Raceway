@@ -6,8 +6,8 @@ public class VehicleSelect : MonoBehaviour {
 
     public GameObject[] vehcles;
     public GameObject currentVehicleObject;
-    private GameObject vehicleStats;
-    private GameObject vehicleCustomise;
+    public GameObject vehicleStats;
+    public GameObject vehicleCustomise;
 
     private Image preview;
     private int carIndex = 0;
@@ -25,8 +25,6 @@ public class VehicleSelect : MonoBehaviour {
         else if (GameManager.instance.raceType == GameManager.RaceType.Boat)
             vehcles = Resources.LoadAll<GameObject>("Prefabs\\Vehicles\\Boats");
         preview = transform.GetChild(0).GetComponent<Image>();
-        vehicleStats = transform.GetChild(1).gameObject;
-        vehicleCustomise = transform.GetChild(2).gameObject;
         PreviewVehicle();
     }
 
@@ -133,10 +131,14 @@ public class VehicleSelect : MonoBehaviour {
         Vehicle CurrentVehicle = currentVehicleObject.GetComponent<Vehicle>();
         Text vehicleName = vehicleStats.transform.GetChild(0).GetComponent<Text>();
         StatBar speedBar = vehicleStats.transform.GetChild(1).GetComponent<StatBar>();
+        StatBar accerlationBar = vehicleStats.transform.GetChild(2).GetComponent<StatBar>();
+        StatBar tractionBar = vehicleStats.transform.GetChild(3).GetComponent<StatBar>();
 
 
         vehicleName.text = CurrentVehicle.VehicleName;
         speedBar.SetValue(CurrentVehicle.MaxSpeed, 100);
+        accerlationBar.SetValue(CurrentVehicle.SpeedForce, 50);
+        tractionBar.SetValue(CurrentVehicle.DriftFactorSticky, 1);
     }
 
     private void SetDropdown()
