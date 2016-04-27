@@ -20,6 +20,7 @@ public class Vehicle : MonoBehaviour
     [SerializeField]
     private bool handbrake = false;
     private VehicleColor vechicleColor;
+    private string vehicleName;
 
     public VehicleType vehicleType;
 
@@ -30,7 +31,7 @@ public class Vehicle : MonoBehaviour
     }
 
     private Vector2 position;
-    private double speed;
+    private float speed;
     private float driftFactor;
 
     private float angularVelocity;
@@ -38,11 +39,12 @@ public class Vehicle : MonoBehaviour
     Rigidbody2D rb;
 
     // Use this for initialization
-    void Start()
+    void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
         DriftFactor = DriftFactorSticky;
         VechicleColor = GetComponent<VehicleColor>();
+        vehicleName = gameObject.name.Replace("(Clone)","");
     }
 
     void FixedUpdate()
@@ -72,12 +74,13 @@ public class Vehicle : MonoBehaviour
 
         float tf = Mathf.Lerp(0, TorqueForce, rb.velocity.magnitude / 2);
         rb.angularVelocity = angularVelocity * tf;
-        //Debug.Log(angularVelocity);
+        
     }
 
     public void AddForce(Vector2 position)
     {
-        rb.AddForce(position);
+        if(Speed <  MaxSpeed)
+            rb.AddForce(position);
     }
 
     public void AngularVelocity(float AV)
@@ -256,11 +259,11 @@ public class Vehicle : MonoBehaviour
         }
     }
 
-    public double Speed
+    public float Speed
     {
         get
         {
-            return rb.velocity.magnitude * 2.237 * 2;
+            return rb.velocity.magnitude * (float)2.237 * 2;
         }
     }
 
@@ -274,6 +277,19 @@ public class Vehicle : MonoBehaviour
         set
         {
             vechicleColor = value;
+        }
+    }
+
+    public string VehicleName
+    {
+        get
+        {
+            return vehicleName;
+        }
+
+        set
+        {
+            vehicleName = value;
         }
     }
 }

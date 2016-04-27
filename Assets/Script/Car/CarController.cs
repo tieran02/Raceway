@@ -31,5 +31,7 @@ public class CarController : MonoBehaviour
             car.Handbrake = false;
 
         car.AngularVelocity(CrossPlatformInputManager.GetAxis("Horizontal"));
+
+        Debug.Log(car.Speed + " " + car.MaxSpeed);
     }
 }

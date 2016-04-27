@@ -13,7 +13,7 @@ public class Speedometer : MonoBehaviour {
 	void Update () {
         if (GameManager.instance.Player != null)
         {
-            text.text = "Speed: " + Mathf.Round((float)GameManager.instance.Player.Car.Speed);
+            text.text = "Speed: " + Mathf.Round(GameManager.instance.Player.Car.Speed);
         }
 	}
 }
