@@ -9,12 +9,6 @@ public class Map : MonoBehaviour {
 
     int amountOfRacers;
     Image[] markers;
-
-	// Use this for initialization
-	void Start ()
-    {
-        
-    }
 	
 	// Update is called once per frame
 	void Update ()
@@ -46,7 +40,7 @@ public class Map : MonoBehaviour {
         markerObject.AddComponent<Image>();
         Image image = markerObject.GetComponent<Image>();
         image.sprite = markerSprite;
-        image.rectTransform.sizeDelta = new Vector2(.05f,.05f);
+        image.rectTransform.sizeDelta = new Vector2(.25f,.25f);
         image.rectTransform.anchorMin  = new Vector2(0.5f,0.5f);
         image.rectTransform.anchorMax = new Vector2(0.5f, 0.5f);
         image.rectTransform.localPosition = Vector3.zero;
