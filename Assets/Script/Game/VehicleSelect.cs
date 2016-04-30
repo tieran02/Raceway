@@ -61,34 +61,6 @@ public class VehicleSelect : MonoBehaviour {
         hud.setHUD(true);
     }
 
-    //public void getVehicle()
-    //{
-    //    if (currentVehicle != vehcles[index])
-    //    {
-    //        for (int i = 0; i < transform.GetChild(0).transform.childCount; ++i)
-    //        {
-    //            if(i > 1)
-    //            {
-    //                Destroy(transform.GetChild(0).transform.GetChild(i).gameObject);
-    //            }
-    //        }
-    //            currentVehicle = vehcles[index];
-    //        for (int i = 0; i < currentVehicle.transform.childCount; ++i)
-    //        {
-    //            GameObject child = currentVehicle.transform.GetChild(i).gameObject;
-    //            GameObject bodyPreviewObject = new GameObject(child.name + "Preview");
-    //            bodyPreviewObject.AddComponent<RectTransform>();
-    //            Image bodyPreviewImage = bodyPreviewObject.AddComponent<Image>();
-    //            bodyPreviewObject.transform.parent = transform.GetChild(0);
-
-    //            bodyPreviewImage.rectTransform.localPosition = Vector2.zero;
-    //            bodyPreviewImage.sprite = child.GetComponent<SpriteRenderer>().sprite;
-    //            bodyPreviewImage.rectTransform.sizeDelta = new Vector2(child.GetComponent<SpriteRenderer>().sprite.bounds.size.x, child.GetComponent<SpriteRenderer>().sprite.bounds.size.y)* 100;
-    //        }
-    //        getStat();
-    //    }
-    //}
-
     public void PreviewVehicle()
     {
         if (currentVehicleObject != null)
@@ -114,7 +86,7 @@ public class VehicleSelect : MonoBehaviour {
             currentVehicleObject.AddComponent<RectTransform>();
         currentVehicleObject.transform.SetParent(transform.GetChild(0));
         currentVehicleObject.transform.localPosition = new Vector3(0, 0, -10);
-        currentVehicleObject.transform.localScale = Vector3.one * 100;
+        currentVehicleObject.transform.localScale = Vector3.one * 200;
 
         MonoBehaviour[] comps = currentVehicleObject.GetComponents<MonoBehaviour>();
         foreach (MonoBehaviour c in comps)

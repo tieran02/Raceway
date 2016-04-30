@@ -58,12 +58,6 @@
     <Reference Include="UnityEngine.Networking">
       <HintPath>Library\UnityAssemblies\UnityEngine.Networking.dll</HintPath>
     </Reference>
-    <Reference Include="UnityEngine.Networking">
-      <HintPath>Library\UnityAssemblies\UnityEngine.Networking.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEngine.UI">
-      <HintPath>Library\UnityAssemblies\UnityEngine.UI.dll</HintPath>
-    </Reference>
     <Reference Include="UnityEditor">
       <HintPath>Library\UnityAssemblies\UnityEditor.dll</HintPath>
     </Reference>
@@ -84,11 +78,14 @@
     <Compile Include="Assets\Script\Car\VehicleColor.cs" />
     <Compile Include="Assets\Script\Game\FinishLine.cs" />
     <Compile Include="Assets\Script\Game\GameManager.cs" />
+    <Compile Include="Assets\Script\Game\Profile.cs" />
+    <Compile Include="Assets\Script\Game\ProfileManager.cs" />
     <Compile Include="Assets\Script\Game\Racer.cs" />
     <Compile Include="Assets\Script\Game\VehicleSelect.cs" />
     <Compile Include="Assets\Script\Game\VehicleSpawner.cs" />
     <Compile Include="Assets\Script\Sound\speedSound.cs" />
     <Compile Include="Assets\Script\UI\HUD.cs" />
+    <Compile Include="Assets\Script\UI\InputBox.cs" />
     <Compile Include="Assets\Script\UI\Lap.cs" />
     <Compile Include="Assets\Script\UI\Map.cs" />
     <Compile Include="Assets\Script\UI\Menus\Mainmenu.cs" />
@@ -96,8 +93,10 @@
     <Compile Include="Assets\Script\UI\Menus\PauseMenu.cs" />
     <Compile Include="Assets\Script\UI\Menus\ProfileMenu.cs" />
     <Compile Include="Assets\Script\UI\Menus\SinglePlayerMenu.cs" />
+    <Compile Include="Assets\Script\UI\ProfileSelect.cs" />
     <Compile Include="Assets\Script\UI\Speedometer.cs" />
     <Compile Include="Assets\Script\UI\StatBar.cs" />
+    <Compile Include="Assets\Script\UI\UIManager.cs" />
     <Compile Include="Assets\Script\Utilities\PlayerPrefsx\PlayerPrefsX.cs" />
     <Compile Include="Assets\Script\Waypoints\Node.cs" />
     <Compile Include="Assets\Script\Waypoints\Waypoint.cs" />
