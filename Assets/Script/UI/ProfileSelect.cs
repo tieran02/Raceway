@@ -2,8 +2,12 @@
 using System.Collections;
 using UnityEngine.UI;
 using UnityEngine.Events;
+using UnityEngine.EventSystems;
+using UnityEngine.SceneManagement;
 
 public class ProfileSelect : MonoBehaviour {
+
+    public GameObject createProfile;
 
 	// Use this for initialization
 	void Start () {
@@ -14,6 +18,18 @@ public class ProfileSelect : MonoBehaviour {
 	void Update () {
 	
 	}
+
+    void OnEnable()
+    {
+        Transform parent = transform.GetChild(1);
+
+        int childs = parent.childCount;
+        for (int i = childs - 1; i > 0; i--)
+        {
+            Destroy(parent.GetChild(i).gameObject);
+        }
+        getProfiles();
+    }
 
     public void getProfiles()
     {
@@ -30,8 +46,7 @@ public class ProfileSelect : MonoBehaviour {
 
     private void addProfileButton(string name)
     {
-        GameObject buttonObject = new GameObject(name+"Profile");
-        buttonObject.transform.SetParent(transform.GetChild(1));
+        UIManager.CreateButton(transform.GetChild(1), 0, 0, 0, 0, name, loadProfile);
     }
 
     private void addCreateProfileButton()
@@ -42,8 +57,13 @@ public class ProfileSelect : MonoBehaviour {
 
     private void createProfileForm()
     {
+        createProfile.SetActive(true);
         gameObject.SetActive(false);
     }
 
-    
+    private void loadProfile()
+    {
+        ProfileManager.instance.ActiveProfile = ProfileManager.instance.getProfile(EventSystem.current.currentSelectedGameObject.transform.GetChild(0).GetComponent<Text>().text);
+        SceneManager.LoadScene("Menu");
+    }
 }

@@ -7,6 +7,8 @@ using System.IO;
 public class ProfileManager : MonoBehaviour {
     [SerializeField]
     private List<Profile> profiles;
+    [SerializeField]
+    private Profile activeProfile;
 
     public List<Profile> Profiles
     {
@@ -20,6 +22,20 @@ public class ProfileManager : MonoBehaviour {
             profiles = value;
         }
     }
+
+    public Profile ActiveProfile
+    {
+        get
+        {
+            return activeProfile;
+        }
+
+        set
+        {
+            activeProfile = value;
+        }
+    }
+
     public static ProfileManager instance = null;
 
     //Awake is always called before any Start functions
@@ -44,13 +60,16 @@ public class ProfileManager : MonoBehaviour {
 
     public void AddProfile(string name)
     {
-        foreach(Profile profile in profiles)
-        {
-            if(profile.Name == null)
-            {
-                profile.Name = name;
-            }
-        }
+        Profile newProfile = new Profile();
+        newProfile.Lose = 0;
+        newProfile.FavouriteCar = null;
+        newProfile.Name = name;
+        newProfile.WinPercentage = 0;
+        newProfile.Wins = 0;
+
+        profiles.Add(newProfile);
+        SaveProfiles();
+        LoadProfiles();
     }
 
     public void RemoveProfile(string name)
@@ -62,14 +81,28 @@ public class ProfileManager : MonoBehaviour {
                 profiles.Remove(profile);
             }
         }
+        SaveProfiles();
+        LoadProfiles();
+    }
+
+    public Profile getProfile(string name)
+    {
+        foreach (Profile profile in profiles)
+        {
+            if (profile.Name == name)
+            {
+                return profile;
+            }
+        }
+        return null;
     }
 
     public void LoadProfiles()
     {
-        if (File.Exists("BinaryMap.dat"))
+        if (File.Exists("Profiles.dat"))
         {
             BinaryFormatter bf = new BinaryFormatter();
-            byte[] data = File.ReadAllBytes("BinaryMap.dat");
+            byte[] data = File.ReadAllBytes("Profiles.dat");
             MemoryStream ms = new MemoryStream(data);
             profiles = new List<Profile>();
             profiles = (List<Profile>)bf.Deserialize(ms);

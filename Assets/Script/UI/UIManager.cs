@@ -115,4 +115,5 @@ public class UIManager
         trans.offsetMin = trans.offsetMin - new Vector2(sizeDiff.x * trans.pivot.x, sizeDiff.y * trans.pivot.y);
         trans.offsetMax = trans.offsetMax + new Vector2(sizeDiff.x * (1.0f - trans.pivot.x), sizeDiff.y * (1.0f - trans.pivot.y));
     }
+
 }
