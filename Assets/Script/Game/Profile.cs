@@ -10,7 +10,7 @@ public class Profile
     [SerializeField]
     private int wins;
     [SerializeField]
-    private int lose;
+    private int losses;
     [SerializeField]
     private double winPercentage;
     [SerializeField]
@@ -42,16 +42,16 @@ public class Profile
         }
     }
 
-    public int Lose
+    public int Losses
     {
         get
         {
-            return lose;
+            return losses;
         }
 
         set
         {
-            lose = value;
+            losses = value;
         }
     }
 

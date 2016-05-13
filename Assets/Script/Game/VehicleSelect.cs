@@ -20,10 +20,7 @@ public class VehicleSelect : MonoBehaviour {
     {
         hud = transform.parent.gameObject.GetComponent<HUD>();
         hud.setHUD(false);
-        if (GameManager.instance.raceType == GameManager.RaceType.Car)
-            vehcles = Resources.LoadAll<GameObject>("Prefabs\\Vehicles\\Cars");
-        else if (GameManager.instance.raceType == GameManager.RaceType.Boat)
-            vehcles = Resources.LoadAll<GameObject>("Prefabs\\Vehicles\\Boats");
+        vehcles = Resources.LoadAll<GameObject>("Prefabs\\Vehicles\\Cars");
         preview = transform.GetChild(0).GetComponent<Image>();
         PreviewVehicle();
     }

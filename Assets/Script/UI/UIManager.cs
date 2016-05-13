@@ -55,7 +55,7 @@ public class UIManager
         return textObject;
     }
 
-    public static GameObject CreateButton(Transform parent, float x, float y, float w, float h, string message, UnityAction eventListner)
+    public static GameObject CreateButton(Transform parent, float x, float y, float w, float h, string message,int fontSize, UnityAction eventListner)
     {
         GameObject buttonObject = new GameObject("Button");
         buttonObject.transform.SetParent(parent);
@@ -77,7 +77,7 @@ public class UIManager
         button.interactable = true;
         button.onClick.AddListener(eventListner);
 
-        GameObject textObject = CreateText(buttonObject.transform, 0, 0, 0, 0, message, 24);
+        GameObject textObject = CreateText(buttonObject.transform, 0, 0, 0, 0, message, fontSize);
 
         return buttonObject;
     }

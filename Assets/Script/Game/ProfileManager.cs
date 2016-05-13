@@ -61,7 +61,7 @@ public class ProfileManager : MonoBehaviour {
     public void AddProfile(string name)
     {
         Profile newProfile = new Profile();
-        newProfile.Lose = 0;
+        newProfile.Losses = 0;
         newProfile.FavouriteCar = null;
         newProfile.Name = name;
         newProfile.WinPercentage = 0;
@@ -81,6 +81,13 @@ public class ProfileManager : MonoBehaviour {
                 profiles.Remove(profile);
             }
         }
+        SaveProfiles();
+        LoadProfiles();
+    }
+
+    public void RemoveProfile(Profile profile)
+    {
+        profiles.Remove(profile);
         SaveProfiles();
         LoadProfiles();
     }

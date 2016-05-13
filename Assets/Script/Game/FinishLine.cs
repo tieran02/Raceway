@@ -3,6 +3,8 @@ using System.Collections;
 
 public class FinishLine : MonoBehaviour {
 
+    public GameObject FinishMenu;
+
 	// Use this for initialization
 	void Start () {
 	
@@ -22,6 +24,10 @@ public class FinishLine : MonoBehaviour {
             racer.Checkpoints = 0;
         }
 
+        if (racer.IsPlayer && racer.CurrentLap > 3)
+        {
+            FinishMenu.SetActive(true);
+        }
     }
 
 }

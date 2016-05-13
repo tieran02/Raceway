@@ -1,37 +1,39 @@
 ﻿using UnityEngine;
-using System.Collections;
-using UnityStandardAssets.CrossPlatformInput;
 
 public class CarController : MonoBehaviour
 {
-    Vehicle car;
+    Racer racer; //Holds the car to control
 
     // Use this for initialization
     void Start()
     {
-        car = GetComponent<Vehicle>();
+        racer = GetComponent<Racer>();
     }
 
+    //gets called every frame
     void Update()
     {
-        if (CrossPlatformInputManager.GetAxis("Vertical") > 0)
+        //If the player presses accelerate 
+        if (Input.GetAxis("Vertical") > 0)
         {
-            car.AddForce(transform.up * car.SpeedForce);
-
+            // add force to the car in the direction infront of the car multiplied by the cars force amount
+            racer.Car.AddForce(transform.up * racer.Car.SpeedForce);
         }
-        if (CrossPlatformInputManager.GetAxis("Vertical") < 0)
+        //If the player presses brake
+        if (Input.GetAxis("Vertical") < 0)
         {
-            car.AddForce(transform.up * -car.SpeedForce / 2f);
+            // add force to the car in the direction behind of the car multiplied by the cars force amount divided by 2
+            racer.Car.AddForce(transform.up * -racer.Car.SpeedForce / 2f);
         }
 
+        //If the played presses the key for the handbrake then enable the handbrake else reset it
         if (Input.GetButton("handbrake"))
         {
-            car.Handbrake = true;
+            racer.Car.Handbrake = true;
         }else
-            car.Handbrake = false;
+            racer.Car.Handbrake = false;
 
-        car.AngularVelocity(CrossPlatformInputManager.GetAxis("Horizontal"));
-
-        Debug.Log(car.Speed + " " + car.MaxSpeed);
+        //Add angular velocity to the car by the amount the player is steering on the horizontal axis
+        racer.Car.AngularVelocity(Input.GetAxis("Horizontal"));
     }
 }

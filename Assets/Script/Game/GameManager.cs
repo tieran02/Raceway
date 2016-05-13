@@ -7,14 +7,7 @@ public class GameManager : MonoBehaviour {
 
     public List<Racer> Racers;
     public Racer Player;
-    public RaceType raceType;
-
-    public enum RaceType
-    {
-        Car,
-        Boat
-    }
-
+    public Racer[] racerOrder;
 
     //Awake is always called before any Start functions
     void Awake()
@@ -45,7 +38,12 @@ public class GameManager : MonoBehaviour {
         {
             Player = getPlayer();
         }
-	}
+
+        foreach (Racer racer in Racers)
+        {
+            racer.RacePosition = racer.GetCarPosition(Racers.ToArray()) ;
+        }
+    }
 
     public void addRacer(Racer racer)
     {

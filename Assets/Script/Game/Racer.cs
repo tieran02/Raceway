@@ -2,18 +2,39 @@
 
 public class Racer : MonoBehaviour
 {
+    /*
+    Variables 
+    */
     [SerializeField]
-    private string characterName;
+    private string characterName; //The racers name
     [SerializeField]
-    private int currentLap = 1;
+    private int currentLap = 1; //The current lap the racer is on
     [SerializeField]
-    private int racePosition;
+    private int racePosition; //the postition the racer is compared to the other racers
     [SerializeField]
-    private bool isPlayer;
+    private bool isPlayer; //used to tell if the racer is the player
     [SerializeField]
-    private int checkpoints = 0;
-    private Vehicle vehcle;
+    private int checkpoints = 0; //checkpoints the racer has passed through
+    private Vehicle vehcle; // The racers vehicle
 
+    public float GetDistance()
+    {
+        return (transform.position - WaypointManager.instance.waypoints[Mathf.Clamp(checkpoints-1,0, WaypointManager.instance.waypoints.Length)].Position()).magnitude + checkpoints * 100 + currentLap * 10000;
+    }
+
+    public int GetCarPosition(Racer[] allRacers)
+    {
+        float distance = GetDistance();
+        int position = 1;
+        foreach (Racer racer in allRacers)
+        {
+            if (racer.GetDistance() > distance)
+                position++;
+        }
+        return position;
+    }
+
+    //Getter and setters for the private variables to make them accesibe by other classes
     public string CharacterName
     {
         get
@@ -89,23 +110,18 @@ public class Racer : MonoBehaviour
         }
     }
 
+    //This function gets called when the game scene loads
     void Start()
     {
-        Car = GetComponent<Vehicle>();
-        GameManager.instance.addRacer(this);
-        if (isPlayer)
+        vehcle = GetComponent<Vehicle>(); //assign the vehicle variable
+        GameManager.instance.addRacer(this); //add this new racer to the list of racers to be used by the gamemanager class
+        if (isPlayer) // if the racer is the player add the Carcontoller otherwise make it an AI and add the AI script to the car
         {
-            if (!gameObject.GetComponent<CarController>() && GameManager.instance.raceType == GameManager.RaceType.Car)
                 gameObject.AddComponent<CarController>();
-            else if (!gameObject.GetComponent<BoatController>() && GameManager.instance.raceType == GameManager.RaceType.Boat)
-                gameObject.AddComponent<BoatController>();
         }
         else
         {
-            if (!gameObject.GetComponent<CarAI>() && GameManager.instance.raceType == GameManager.RaceType.Car)
                 gameObject.AddComponent<CarAI>();
-            else if (!gameObject.GetComponent<BoatAI>() && GameManager.instance.raceType == GameManager.RaceType.Boat)
-                gameObject.AddComponent<BoatAI>();
         }
     }
 

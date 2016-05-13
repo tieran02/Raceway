@@ -9,11 +9,7 @@ public class VehicleSpawner : MonoBehaviour {
 
     // Use this for initialization
     void Start () {
-        if (GameManager.instance.raceType == GameManager.RaceType.Car)
-            path = "Prefabs\\Vehicles\\Cars";
-        else if (GameManager.instance.raceType == GameManager.RaceType.Boat)
-            path = "Prefabs\\Vehicles\\Boats";
-
+        path = "Prefabs\\Vehicles\\Cars";
         vehcles = Resources.LoadAll<GameObject>(path);
 
         spawnVehicle();

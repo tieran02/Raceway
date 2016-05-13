@@ -54,6 +54,11 @@ public class Waypoint
         }
     }
 
+    public Vector3 Position()
+    {
+        return new Vector3(AIPathCenter().x, AIPathCenter().y, 0);
+    }
+
     public Node Node
     {
         get

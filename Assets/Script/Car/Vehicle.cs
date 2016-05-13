@@ -5,91 +5,90 @@ using System;
 [Serializable]
 public class Vehicle : MonoBehaviour
 {
+    /*
+    Variables 
+    */
     [SerializeField]
-    private float speedForce = 15f;
+    private float speedForce = 15f; //The amount of force that gets added to the car per frame if acclerating
     [SerializeField]
-    private float maxSpeed = 10f;
+    private float maxSpeed = 50f; // The max speed of the vehicle
     [SerializeField]
-    private float torqueForce = -200f;
+    private float torqueForce = -200f; //The amount of torque that gets apllied when turning the car
     [SerializeField]
-    private float driftFactorSticky = 0.1f;
+    private float driftFactorSticky = 0.1f; //The amount of sideways velocity the car needs to stick to the road
     [SerializeField]
-    private float driftFactorSlippy = 0.9f;
+    private float driftFactorSlippy = 0.9f; //The amount of sideways velocity the car needs to drift
     [SerializeField]
-    private float maxStickyVelocity = 2.5f;
+    private float maxStickyVelocity = 2.5f; //The amount of sideways velocity required to keep traction
     [SerializeField]
-    private float minSlippyVelocity = 1.5f;
+    private float minSlippyVelocity = 1.5f; //The amount of sideways velocity required to stop drifting
     [SerializeField]
-    private bool handbrake = false;
-    private VehicleColor vechicleColor;
-    private string vehicleName;
+    private bool handbrake = false; //used to tell if the handbrake is being used
+    private VehicleColor vechicleColor; // holds the vehicles color data
+    private string vehicleName; //Holds the name of the vehicle
 
-    public VehicleType vehicleType;
+    private Vector2 position; //World position of the car
+    private float speed; //Speed of the car
+    private float driftFactor; //current drift factor of the car (used to tell if the car should start drifting)
 
-    public enum VehicleType
-    {
-        Car,
-        Boat
-    }
+    private float angularVelocity;// Angular velocity of the car
 
-    private Vector2 position;
-    private float speed;
-    private float driftFactor;
-
-    private float angularVelocity;
-
-    Rigidbody2D rb;
+    private Rigidbody2D rb; //The pysics rigidbody used to handle all of the collision
 
     // Use this for initialization
     void Awake()
     {
-        rb = GetComponent<Rigidbody2D>();
-        DriftFactor = DriftFactorSticky;
-        VechicleColor = GetComponent<VehicleColor>();
-        vehicleName = gameObject.name.Replace("(Clone)","");
+        rb = GetComponent<Rigidbody2D>(); //Assign the rigid body to the one attached to the object
+        DriftFactor = DriftFactorSticky; //set driftfactor to not drift
+        VechicleColor = GetComponent<VehicleColor>(); //Assign the vehicles colour from the VehicleColor class attached to the current object
+        vehicleName = gameObject.name.Replace("(Clone)",""); //Assign the vehicle name and remove the clone prefix
     }
 
+    //Fixxed update will keep looping no matter on the framerate which makes it ideal to calculate all our physic with
     void FixedUpdate()
     {
-        if (Handbrake)
+        if (Handbrake)// if the car is using its handbrake set the drift factor to .99f which makes it drift alot
         {
             DriftFactor = .99f;
             rb.velocity = ForwardVelocity() + RightVelocity() * DriftFactor;
         }
-        else
+        else // if the handbrake is not true then calculate the default physics
         {
-            if (RightVelocity().magnitude > 2f && DriftFactor > DriftFactorSticky)
+            if (RightVelocity().magnitude > 2f && DriftFactor > DriftFactorSticky) //Calculates if the car is drifting and then reduces the drift factor if the car is drifting
             {
                 DriftFactor -= 0.001f;
             }
             else
             {
-                DriftFactor = DriftFactorSticky;
-                if (RightVelocity().magnitude > MaxStickyVelocity)
+                DriftFactor = DriftFactorSticky; //reset the Drift factor
+                if (RightVelocity().magnitude > MaxStickyVelocity)// checks if the current sidways velocity is higher than the Max sticky velcoty 
                 {
-                    DriftFactor = DriftFactorSlippy;
+                    DriftFactor = DriftFactorSlippy;// sets the drift factor to slippy and makes the car start drifting
                 }
 
-                rb.velocity = ForwardVelocity() + RightVelocity() * DriftFactor;
+                rb.velocity = ForwardVelocity() + RightVelocity() * DriftFactor; // sets the velocity of the car to make it drift around
             }
         }
 
-        float tf = Mathf.Lerp(0, TorqueForce, rb.velocity.magnitude / 2);
-        rb.angularVelocity = angularVelocity * tf;
+        float tf = Mathf.Lerp(0, TorqueForce, rb.velocity.magnitude / 2); //This value is the sterring modifer which depends on the cars speed
+        rb.angularVelocity = angularVelocity * tf; //sets the cars angular velcity using the modifer above (this insures you can only turn whilst you're moving)
         
     }
 
+    //This function is used by other classes to add force to the vehicle
     public void AddForce(Vector2 position)
     {
         if(Speed <  MaxSpeed)
             rb.AddForce(position);
     }
 
+    //This function is used to set the angularVelcoity of the vehicle and enables the car to steer
     public void AngularVelocity(float AV)
     {
         angularVelocity = AV;
     }
 
+    //This function takes in a vector and makes the car face towards it
     public void FaceTowards(Vector2 newPos)
     {
         Vector3 dir = newPos - rb.position;
@@ -110,9 +109,12 @@ public class Vehicle : MonoBehaviour
         {
             AngularVelocity(0f);
         }
-        //Debug.Log(newSterr + "   " + transform.rotation.eulerAngles.z);
     }
 
+
+    /*
+    Getters and Setters
+    */
     public Vector2 ForwardVelocity()
     {
         return transform.up * Vector2.Dot(GetComponent<Rigidbody2D>().velocity, transform.up);

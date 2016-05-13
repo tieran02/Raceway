@@ -36,15 +36,19 @@ public class WaypointManager : MonoBehaviour
     public void AddWaypoints()
     {
         waypoints = new Waypoint[transform.childCount];
+        //Start iterating through all child objects of the object this is attached to
         foreach (Transform child in transform)
         {
+            //For each child object we will also iterate through all if that childs attached components.
             foreach (Component comp in child.GetComponents<Component>())
             {
+                //if the component does not equal Transform destroy that component
                 if (comp.GetType() != typeof(Transform)) 
                     DestroyImmediate(comp);
             }
         }
 
+        //iterate though all the child objects again to add the node class for the waypoint
         for (int i = 0; i < transform.childCount; i++)
         {
             Transform waypointTransform = transform.GetChild(i).transform;

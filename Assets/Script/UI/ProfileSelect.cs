@@ -11,6 +11,12 @@ public class ProfileSelect : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
+        Transform parent = transform.GetChild(1);
+
+        foreach (Transform child in parent)
+        {
+            GameObject.Destroy(child.gameObject);
+        }
         getProfiles();
     }
 	
@@ -23,10 +29,9 @@ public class ProfileSelect : MonoBehaviour {
     {
         Transform parent = transform.GetChild(1);
 
-        int childs = parent.childCount;
-        for (int i = childs - 1; i > 0; i--)
+        foreach (Transform child in parent)
         {
-            Destroy(parent.GetChild(i).gameObject);
+            GameObject.Destroy(child.gameObject);
         }
         getProfiles();
     }
@@ -41,17 +46,18 @@ public class ProfileSelect : MonoBehaviour {
                     addProfileButton(profile.Name);
             }
         }
-        addCreateProfileButton();
+        if(ProfileManager.instance.Profiles.Count < 3)
+            addCreateProfileButton();
     }
 
     private void addProfileButton(string name)
     {
-        UIManager.CreateButton(transform.GetChild(1), 0, 0, 0, 0, name, loadProfile);
+        UIManager.CreateButton(transform.GetChild(1), 0, 0, 0, 0, name,24, loadProfile);
     }
 
     private void addCreateProfileButton()
     {
-        UIManager.CreateButton(transform.GetChild(1), 0, 0, 0, 0, "Create Profile", createProfileForm);
+        UIManager.CreateButton(transform.GetChild(1), 0, 0, 0, 0, "Create Profile",24, createProfileForm);
         Debug.Log("test");
     }
 
